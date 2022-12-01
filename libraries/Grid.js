@@ -2,11 +2,12 @@ class Cell {
   static spawnRate = 0.1;
 
   constructor(grid, y, x) {
+    this.grid = grid;
     this.x = x;
     this.y = y;
+
     this.alive = Math.random() < Cell.spawnRate;
     this.age = 0;
-    this.grid = grid;
   }
 
   get neighbors() {
