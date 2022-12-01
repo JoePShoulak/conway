@@ -9,3 +9,7 @@ function lerpColors(progress, ...colors) {
   const i = ~~(progress * n);
   return lerpColor(colors[i], colors[i + 1], (progress * n) % 1);
 }
+
+function newArr(n) {
+  return Array(n).fill();
+}

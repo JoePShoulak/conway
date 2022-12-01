@@ -30,13 +30,9 @@ class Grid {
     this.width = cols;
     this.height = rows;
 
-    this.array = Array(rows)
-      .fill()
-      .map((_row, i) =>
-        Array(cols)
-          .fill()
-          .map((_cell, j) => new Cell(this, i, j))
-      );
+    this.array = newArr(rows).map((_row, i) =>
+      newArr(cols).map((_cell, j) => new Cell(this, i, j))
+    );
   }
 
   get cells() {
@@ -44,21 +40,16 @@ class Grid {
   }
 
   neighborsOf(cell) {
-    return Array(3)
-      .fill()
-      .map((_, i) =>
-        Array(3)
-          .fill()
-          .map((__, j) => [i - 1, j - 1])
-      )
+    return newArr(3)
+      .map((_, i) => newArr(3).map((__, j) => [i - 1, j - 1]))
       .flat()
       .filter(
         ([h, w]) =>
           !(h === 0 && w === 0) &&
           h + cell.y >= 0 &&
-          h + cell.y < this.array.length &&
+          h + cell.y < this.height &&
           w + cell.x >= 0 &&
-          w + cell.x < this.array[0].length
+          w + cell.x < this.width
       )
       .map(([h, j]) => this.array[h + cell.y][j + cell.x]);
   }
