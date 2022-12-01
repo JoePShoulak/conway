@@ -25,9 +25,7 @@ function drawCell(cell) {
 }
 
 function drawGrid(grid) {
-  grid.array.forEach((row) => {
-    row.forEach((cell) => drawCell(cell));
-  });
+  grid.array.forEach((row) => row.forEach((cell) => drawCell(cell)));
 }
 
 function setup() {
@@ -46,8 +44,6 @@ function windowResized() {
 
 function draw() {
   grid.array.forEach((row) => {
-    row.forEach((cell) => {
-      cell.update(drawCell);
-    });
+    row.forEach((cell) => cell.update(drawCell));
   });
 }
