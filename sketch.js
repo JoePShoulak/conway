@@ -9,7 +9,6 @@ let cellWidth, cellHeight;
 
 function drawCell(cell) {
   const progress = cell.age / maxAge;
-
   const cellColor = cell.alive ? lerpColors(progress, ...colors) : deadColor;
 
   fill(cellColor);
