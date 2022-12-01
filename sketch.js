@@ -4,11 +4,11 @@ function drawCell(cell) {
   const w = width / grid.width;
   const h = height / grid.height;
 
-  let cellColor;
-
   const c1 = color("green");
   const c2 = color("blue");
   const c3 = color("purple");
+
+  let cellColor;
 
   if (cell.alive) {
     if (cell.age < 50) {
@@ -43,7 +43,5 @@ function windowResized() {
 }
 
 function draw() {
-  grid.array.forEach((row) => {
-    row.forEach((cell) => cell.update(drawCell));
-  });
+  grid.array.forEach((row) => row.forEach((cell) => cell.update(drawCell)));
 }
