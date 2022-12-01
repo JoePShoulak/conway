@@ -3,6 +3,7 @@ const cellCount = 50;
 const framerate = 10;
 const colors = ["green", "blue", "purple"];
 const deadColor = 20;
+const strokeColor = 64;
 
 let grid;
 let cellWidth, cellHeight;
@@ -29,7 +30,7 @@ function windowResized() {
 function setup() {
   createCanvas(innerWidth, innerHeight);
   frameRate(framerate);
-  stroke(64);
+  stroke(strokeColor);
 
   grid = new Grid(cellCount, cellCount);
 
