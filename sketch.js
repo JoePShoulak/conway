@@ -1,5 +1,7 @@
 let grid;
 
+const ageBreak = 50;
+
 function drawCell(cell) {
   const w = width / grid.width;
   const h = height / grid.height;
@@ -11,10 +13,10 @@ function drawCell(cell) {
   let cellColor;
 
   if (cell.alive) {
-    if (cell.age < 50) {
-      cellColor = lerpColor(c1, c2, cell.age / 50);
+    if (cell.age < ageBreak) {
+      cellColor = lerpColor(c1, c2, cell.age / ageBreak);
     } else {
-      cellColor = lerpColor(c2, c3, (cell.age - 50) / 50);
+      cellColor = lerpColor(c2, c3, (cell.age - ageBreak) / ageBreak);
     }
   } else {
     cellColor = "white";
