@@ -1,4 +1,6 @@
 function lerpColors(progress, ...colors) {
+  colors = colors.map((c) => (c instanceof p5.Color ? c : color(c)));
+
   const n = colors.length - 1;
 
   if (progress <= 0) return colors[0];

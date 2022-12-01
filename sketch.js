@@ -1,15 +1,16 @@
+const maxAge = 100;
+const cellCount = 50;
+const framerate = 10;
+const colors = ["green", "blue", "purple"];
+const deadColor = "white";
+
 let grid;
 let cellWidth, cellHeight;
 
-const maxAge = 100;
-const cellCount = 50;
-const fr = 10;
-
 function drawCell(cell) {
-  const colors = [color("green"), color("blue"), color("purple")];
   const progress = cell.age / maxAge;
 
-  const cellColor = cell.alive ? lerpColors(progress, ...colors) : "white";
+  const cellColor = cell.alive ? lerpColors(progress, ...colors) : deadColor;
 
   fill(cellColor);
   rect(cell.x * cellWidth, cell.y * cellHeight, cellWidth, cellHeight);
@@ -28,7 +29,7 @@ function windowResized() {
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  frameRate(fr);
+  frameRate(framerate);
 
   grid = new Grid(cellCount, cellCount);
 
