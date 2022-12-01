@@ -1,49 +1,40 @@
 let grid;
+let cellWidth, cellHeight;
 
-const ageBreak = 50;
+const maxAge = 100;
+const cellCount = 50;
+const fr = 10;
 
 function drawCell(cell) {
-  const w = width / grid.width;
-  const h = height / grid.height;
+  const colors = [color("green"), color("blue"), color("purple")];
+  const progress = cell.age / maxAge;
 
-  const c1 = color("green");
-  const c2 = color("blue");
-  const c3 = color("purple");
-
-  let cellColor;
-
-  if (cell.alive) {
-    if (cell.age < ageBreak) {
-      cellColor = lerpColor(c1, c2, cell.age / ageBreak);
-    } else {
-      cellColor = lerpColor(c2, c3, (cell.age - ageBreak) / ageBreak);
-    }
-  } else {
-    cellColor = "white";
-  }
+  const cellColor = cell.alive ? lerpColors(progress, ...colors) : "white";
 
   fill(cellColor);
-  rect(cell.x * w, cell.y * h, w, h);
+  rect(cell.x * cellWidth, cell.y * cellHeight, cellWidth, cellHeight);
 }
 
-function drawGrid(grid) {
-  grid.array.forEach((row) => row.forEach((cell) => drawCell(cell)));
-}
-
-function setup() {
-  createCanvas(innerWidth, innerHeight);
-  background(20);
-
-  frameRate(10);
-
-  grid = new Grid(50, 50);
-  drawGrid(grid);
+function resizeCells() {
+  cellWidth = width / grid.width;
+  cellHeight = height / grid.height;
 }
 
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
+
+  resizeCells();
+}
+
+function setup() {
+  createCanvas(innerWidth, innerHeight);
+  frameRate(fr);
+
+  grid = new Grid(cellCount, cellCount);
+
+  resizeCells();
 }
 
 function draw() {
-  grid.array.forEach((row) => row.forEach((cell) => cell.update(drawCell)));
+  grid.cells.forEach((cell) => cell.update(drawCell));
 }

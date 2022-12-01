@@ -1,5 +1,5 @@
 class Cell {
-  static spawnRate = 1 / 10;
+  static spawnRate = 0.1;
 
   constructor(grid, y, x) {
     this.x = x;
@@ -9,14 +9,14 @@ class Cell {
     this.grid = grid;
   }
 
-  update(cb = () => {}) {
-    const livingNeighbors = this.grid
-      .neighborsOf(this)
-      .filter((cell) => cell.alive).length;
+  get neighbors() {
+    return this.grid.neighborsOf(this).filter((cell) => cell.alive).length;
+  }
 
-    if (livingNeighbors < 2) this.alive = false;
-    if (livingNeighbors > 3) this.alive = false;
-    if (livingNeighbors === 3) this.alive = true;
+  update(cb = () => {}) {
+    if (this.neighbors < 2) this.alive = false;
+    else if (this.neighbors > 3) this.alive = false;
+    else if (this.neighbors === 3) this.alive = true;
 
     this.age = this.alive ? this.age + 1 : 0;
 
@@ -38,22 +38,26 @@ class Grid {
       );
   }
 
-  neighborsOf(cell) {
-    let v = Array(9)
-      .fill()
-      .map((_, i) => {
-        const off = i % 3;
-        return [off - 1, (i - off) / 3 - 1];
-      })
-      .filter((x) => !(x[0] === 0 && x[1] === 0));
+  get cells() {
+    return this.array.flat();
+  }
 
-    return v
+  neighborsOf(cell) {
+    return Array(3)
+      .fill()
+      .map((_, i) =>
+        Array(3)
+          .fill()
+          .map((__, j) => [i - 1, j - 1])
+      )
+      .flat()
       .filter(
-        ([h, j]) =>
+        ([h, w]) =>
+          !(h === 0 && w === 0) &&
           h + cell.y >= 0 &&
           h + cell.y < this.array.length &&
-          j + cell.x >= 0 &&
-          j + cell.x < this.array[0].length
+          w + cell.x >= 0 &&
+          w + cell.x < this.array[0].length
       )
       .map(([h, j]) => this.array[h + cell.y][j + cell.x]);
   }
