@@ -2,7 +2,7 @@ const maxAge = 100;
 const cellCount = 50;
 const framerate = 10;
 const colors = ["green", "blue", "purple"];
-const deadColor = "white";
+const deadColor = 20;
 
 let grid;
 let cellWidth, cellHeight;
@@ -29,6 +29,7 @@ function windowResized() {
 function setup() {
   createCanvas(innerWidth, innerHeight);
   frameRate(framerate);
+  stroke(64);
 
   grid = new Grid(cellCount, cellCount);
 
